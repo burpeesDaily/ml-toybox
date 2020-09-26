@@ -1,4 +1,4 @@
-"""Setup file for ml-toolbox."""
+"""Setup file for ml-toybox."""
 
 import pathlib
 import setuptools
@@ -11,12 +11,12 @@ README = (HERE / "README.rst").read_text()
 
 # This call to setup() does all the work
 setuptools.setup(
-    name="ml-toolbox",
+    name="ml-toybox",
     version="0.0.1",
-    description="Machine Learning Toolbox",
+    description="Machine Learning ToyBox",
     long_description=README,
     long_description_content_type="text/x-rst",
-    url="https://github.com/shunsvineyard/ml-toolbox",
+    url="https://github.com/shunsvineyard/ml-toybox",
     author="Shun Huang",
     author_email="shunsvineyard@protonmail.com",
     license="MIT",
