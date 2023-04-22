@@ -16,9 +16,9 @@ setuptools.setup(
     description="Machine Learning ToyBox",
     long_description=README,
     long_description_content_type="text/x-rst",
-    url="https://github.com/shunsvineyard/ml-toybox",
+    url="https://github.com/burpeesDaily/ml-toybox",
     author="Shun Huang",
-    author_email="shunsvineyard@protonmail.com",
+    author_email="shun@formosa1544.com",
     license="MIT",
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
