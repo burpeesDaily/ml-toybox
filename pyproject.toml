@@ -23,6 +23,3 @@ exclude = ["examples", "tests"]
 
 [project.urls]
 repository = "https://github.com/burpeesDaily/ml-toybox"
-
-[project.scripts]
-project-entry = "package.bin.entry:main"
