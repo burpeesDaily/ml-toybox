@@ -1,0 +1,28 @@
+[project]
+name = "ml-toybox"
+version = "0.0.1"
+authors = [
+    {name="Shun Huang", email="shun@formosa1544.com"}
+]
+description = "Machine Learning ToyBox"
+readme = {file = "README.rst", content-type = "text/x-rst"}
+requires-python = ">=3.11"
+dependencies = []
+license = {text = "MIT License"}
+classifiers = [
+        "Development Status :: 2 - Pre-Alpha",
+        "Intended Audience :: Developers",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python :: 3.11"
+]
+keywords = ["Machine Learning"]
+
+[tool.setuptools.packages.find]
+exclude = ["examples", "tests"]
+
+[project.urls]
+repository = "https://github.com/burpeesDaily/ml-toybox"
+
+[project.scripts]
+project-entry = "package.bin.entry:main"
