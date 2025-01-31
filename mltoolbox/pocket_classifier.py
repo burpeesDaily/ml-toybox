@@ -104,7 +104,7 @@ class PocketClassifier:
         self.weights = np.zeros(number_of_attributes + 1)
 
         # Record of the number of misclassify for each training sample.
-        self.misclassify_record = []
+        self.misclassify_record: list[int] = []
 
         # Build the label map to map the original labels to numerical
         # labels. For example, ["a", "b"] -> {0: "a", 1: "b"}
@@ -113,12 +113,9 @@ class PocketClassifier:
 
     def _linear_combination(self, sample: List) -> float:
         """Linear combination of sample and weights."""
-        return np.inner(sample, self.weights[1:])
+        return float(np.inner(sample, self.weights[1:]))
 
-    def train(self, 
-              samples: List[List],
-              labels: List,
-              max_iterator: int = 10):
+    def train(self, samples: List[List], labels: List, max_iterator: int = 10):
         """Train the model with samples.
 
         Parameters
@@ -132,9 +129,7 @@ class PocketClassifier:
             The default is 10.
         """
         # Transfer the labels to numerical labels
-        transferred_labels = [
-            self._reversed_label_map[index] for index in labels
-        ]
+        transferred_labels = [self._reversed_label_map[index] for index in labels]
 
         for _ in range(max_iterator):
             misclassifies = 0
@@ -151,9 +146,11 @@ class PocketClassifier:
 
             # Update the pocket is the result is better than the one
             # in the pocket.
-            if (self.pocket.misclassify_count == -1) \
-                or (self.pocket.misclassify_count > misclassifies) \
-                or (misclassifies == 0):
+            if (
+                (self.pocket.misclassify_count == -1)
+                or (self.pocket.misclassify_count > misclassifies)
+                or (misclassifies == 0)
+            ):
 
                 self.pocket.best_weights = self.weights
                 self.pocket.misclassify_count = misclassifies
@@ -175,7 +172,8 @@ class PocketClassifier:
         List of int
             The list of predicted class labels.
         """
-        predicted_result = np.where((self._linear_combination(new_data)
-                                    + self.weights[0]) >= 0.0, 1, -1)
+        predicted_result = np.where(
+            (self._linear_combination(new_data) + self.weights[0]) >= 0.0, 1, -1
+        )
 
         return [self._label_map[item] for item in predicted_result]

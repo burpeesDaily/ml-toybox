@@ -10,7 +10,7 @@ from typing import List, Tuple
 
 
 class PerceptronClassifier:
-    """Preceptron Binary Classifier.
+    """Perceptron Binary Classifier.
 
     Attributes
     ----------
@@ -71,7 +71,7 @@ class PerceptronClassifier:
         self.weights = np.zeros(number_of_attributes + 1)
 
         # Record of the number of misclassify for each training sample
-        self.misclassify_record = []
+        self.misclassify_record: list[int] = []
 
         # Build the label map to map the original labels to numerical
         # labels. For example, ["a", "b"] -> {0: "a", 1: "b"}
@@ -80,7 +80,7 @@ class PerceptronClassifier:
 
     def _linear_combination(self, sample: List) -> float:
         """Linear combination of sample and weights."""
-        return np.inner(sample, self.weights[1:])
+        return float(np.inner(sample, self.weights[1:]))
 
     def train(self,
               samples: List[List],
