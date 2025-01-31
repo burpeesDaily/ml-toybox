@@ -82,10 +82,7 @@ class PerceptronClassifier:
         """Linear combination of sample and weights."""
         return float(np.inner(sample, self.weights[1:]))
 
-    def train(self,
-              samples: List[List],
-              labels: List,
-              max_iterator: int = 10):
+    def train(self, samples: List[List], labels: List, max_iterator: int = 10):
         """Train the model with samples.
 
         Parameters
@@ -99,9 +96,7 @@ class PerceptronClassifier:
             training data is not converged. The default is 10.
         """
         # Transfer the labels to numerical labels
-        transferred_labels = [
-            self._reversed_label_map[index] for index in labels
-        ]
+        transferred_labels = [self._reversed_label_map[index] for index in labels]
 
         for _ in range(max_iterator):
             misclassifies = 0
@@ -131,7 +126,8 @@ class PerceptronClassifier:
         List of int
             The list of predicted class labels.
         """
-        predicted_result = np.where((self._linear_combination(new_data)
-                                    + self.weights[0]) >= 0.0, 1, -1)
+        predicted_result = np.where(
+            (self._linear_combination(new_data) + self.weights[0]) >= 0.0, 1, -1
+        )
 
         return [self._label_map[item] for item in predicted_result]
