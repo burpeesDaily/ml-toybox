@@ -3,24 +3,24 @@
 # See LICENSE in the project root for license information.
 
 import collections
-from typing import Any  # For type hints
-from urllib import request
 
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
 
+from typing import Any
+from urllib import request
+
 from sklearn import preprocessing
 from sklearn import model_selection
 
-import pocket_classifier
-import perceptron_classifier
-
-sns.set()  # set the default seaborn theme, scaling, and color palette.
+from mltoolbox import pocket_classifier
 
 
-def imputer_by_most_frequent(missing_values: Any, data: []) -> []:
+sns.set_theme()  # set the default seaborn theme, scaling, and color palette.
+
+
+def imputer_by_most_frequent(missing_values: Any, data: list) -> list:
     """Input missing value by frequency, i.e., the value appeared
     most often.
     Parameters
@@ -44,7 +44,7 @@ def imputer_by_most_frequent(missing_values: Any, data: []) -> []:
     return complete_list
 
 
-def one_hot_encoder(data=[]) -> []:
+def one_hot_encoder(data=list) -> list:
     """Transfer categorical data to numerical data based on one hot
     encoding approach.
     Parameters
@@ -168,10 +168,10 @@ if __name__ == "__main__":
         data_minmax, label, test_size=0.25, random_state=1000
     )
 
-    pocket_classifier = pocket_classifier.PocketClassifier(features, ("+", "-"))
-    pocket_classifier.train(DATA_TRAIN, LABELS_TRAIN, 100)
+    classifier = pocket_classifier.PocketClassifier(features, ("+", "-"))
+    classifier.train(DATA_TRAIN, LABELS_TRAIN, 100)
 
-    result = pocket_classifier.classify(DATA_TEST)
+    result = classifier.classify(DATA_TEST)
 
     misclassify = 0
     for predict, answer in zip(result, LABELS_TEST):
