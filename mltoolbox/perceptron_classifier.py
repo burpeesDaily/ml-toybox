@@ -12,22 +12,33 @@ from typing import Any, Tuple
 class PerceptronClassifier:
     """Perceptron Binary Classifier uses Perceptron Learning Algorithm.
 
+    Parameters
+    ----------
+    number_of_attributes: int
+        The number of attributes of the data set.
+    class_labels: tuple of the class labels
+        The class labels can be anything as long as it has only two
+        types of labels.
+
     Attributes
     ----------
     weights: list of float
         The list of weights corresponding to the input attributes.
     misclassify_record: list of int
         The number of misclassification for each training.
+
     Methods
     -------
     train(samples: [[]], labels: [], max_iterator: int = 10)
         Train the perceptron learning algorithm with samples.
     classify(new_data: [[]]) -> []
         Classify the input data.
+
     See Also
     --------
     See details at:
     https://www.formosa1544.com/2017/10/22/machine-learning-basics-and-perceptron-learning-algorithm/
+
     Examples
     --------
     Two dimensions list and each sample has four attributes
@@ -55,16 +66,6 @@ class PerceptronClassifier:
     """
 
     def __init__(self, number_of_attributes: int, class_labels: Tuple):
-        """Initializer of PerceptronClassifier.
-
-        Parameters
-        ----------
-        number_of_attributes: int
-            The number of attributes of the data set.
-        class_labels: tuple of the class labels
-            The class labels can be anything as long as it has only two
-            types of labels.
-        """
         # Initialize the weights to all zero.
         # The size is the number of attributes plus the bias,
         # i.e., x_0 * w_0.
@@ -122,6 +123,7 @@ class PerceptronClassifier:
         ----------
         new_data : two dimensions list
             New data to be classified.
+
         Returns
         -------
         list[int]

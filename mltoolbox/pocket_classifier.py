@@ -13,6 +13,11 @@ from typing import Any, Tuple
 class Pocket:
     """The class keeps the best weights seen so far in the learning process.
 
+    Parameters
+    ----------
+    number_of_attributes: int
+        The number of attributes of the data set.
+
     Attributes
     ----------
     best_weights: list of float
@@ -23,13 +28,6 @@ class Pocket:
     """
 
     def __init__(self, number_of_attributes: int):
-        """Initializer of Pocket.
-
-        Parameters
-        ----------
-        number_of_attributes: int
-            The number of attributes of the data set.
-        """
         self.best_weights = np.zeros(number_of_attributes + 1)
 
         # -1 means the class is initialized but does not have valid value
@@ -38,6 +36,14 @@ class Pocket:
 
 class PocketClassifier:
     """Pocket Binary Classifier.
+
+    Parameters
+    ----------
+    number_of_attributes: int
+        The number of attributes of the data set.
+    class_labels: tuple of the class labels
+        The class labels can be anything as long as it has
+        only two types of labels.
 
     Attributes
     ----------
@@ -49,6 +55,7 @@ class PocketClassifier:
         The list of weights corresponding input attributes.
     misclassify_record: list of int
         The number of misclassification for each training sample.
+
     Methods
     -------
     train(samples: [[]], labels: [], max_iterator: int = 10)
@@ -88,17 +95,6 @@ class PocketClassifier:
     """
 
     def __init__(self, number_of_attributes: int, class_labels: Tuple):
-        """Initializer of PocketClassifier.
-
-        Parameters
-        ----------
-        number_of_attributes: int
-            The number of attributes of the data set.
-        class_labels: tuple of the class labels
-            The class labels can be anything as long as it has
-            only two types of labels.
-        """
-
         # Initialize the Pocket class.
         self.pocket = Pocket(number_of_attributes)
         # Initialize the weights to zero.
