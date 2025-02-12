@@ -6,11 +6,11 @@
 
 import numpy as np
 
-from typing import List, Tuple
+from typing import Any, Tuple
 
 
 class PerceptronClassifier:
-    """Perceptron Binary Classifier.
+    """Perceptron Binary Classifier uses Perceptron Learning Algorithm.
 
     Attributes
     ----------
@@ -53,7 +53,6 @@ class PerceptronClassifier:
     >>> perceptron_classifier.classify(new_data)
     [1, -1]
     """
-
     def __init__(self, number_of_attributes: int, class_labels: Tuple):
         """Initializer of PerceptronClassifier.
 
@@ -78,11 +77,11 @@ class PerceptronClassifier:
         self._label_map = {1: class_labels[0], -1: class_labels[1]}
         self._reversed_label_map = {class_labels[0]: 1, class_labels[1]: -1}
 
-    def _linear_combination(self, sample: List) -> float:
+    def _linear_combination(self, sample: list) -> Any:
         """Linear combination of sample and weights."""
-        return float(np.inner(sample, self.weights[1:]))
+        return np.inner(sample, self.weights[1:])
 
-    def train(self, samples: List[List], labels: List, max_iterator: int = 10):
+    def train(self, samples: list[list], labels: list, max_iterator: int = 10) -> None:
         """Train the model with samples.
 
         Parameters
@@ -115,15 +114,16 @@ class PerceptronClassifier:
                 break
             self.misclassify_record.append(misclassifies)
 
-    def classify(self, new_data: List[List]) -> List:
+    def classify(self, new_data: list[list]) -> list[int]:
         """Classify the sample based on the trained weights.
+
         Parameters
         ----------
         new_data : two dimensions list
             New data to be classified.
         Returns
         -------
-        List of int
+        list[int]
             The list of predicted class labels.
         """
         predicted_result = np.where(

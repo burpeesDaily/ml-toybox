@@ -12,19 +12,16 @@ urllib.request.urlretrieve(URL, "iris.data")
 IRIS_DATA = pd.read_csv("iris.data", header=None)
 
 # Prepare the training data and test data
-# The original Iris Data Set has 150 samples and 50 samples for each
-# class. This example takes first 40 samples of each class as training
-# data, and the other 10 samples of each class as testing data.
-# So, this example uses the testing data to verify the trained
-# Perceptron learning model.
+# The original Iris Data Set has 150 samples and 50 samples for each class.
+# This example takes first 40 samples of each class as training data,
+# and the other 10 samples of each class as testing data for verification.
 # 0 ~ 39: setosa training set
 # 40 ~ 49: setosa testing set
 # 50 ~ 89 versicolor training set
 # 90 ~ 99: versicolor testing set
 # 100 ~ 139: virginica training set
 # 140 ~ 149: virginica testing set
-# Use pandas iloc to select samples by position and return an
-# one-dimension array
+# Use pandas iloc to select samples by position and return an one-dimension array
 # http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.iloc.html#pandas.DataFrame.iloc
 SETOSA_LABEL = IRIS_DATA.iloc[0:40, 4].values
 VERSICOLOR_LABEL = IRIS_DATA.iloc[50:90, 4].values
