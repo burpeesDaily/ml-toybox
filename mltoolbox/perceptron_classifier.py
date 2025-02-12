@@ -29,9 +29,9 @@ class PerceptronClassifier:
 
     Methods
     -------
-    train(samples: [[]], labels: [], max_iterator: int = 10)
+    train(samples: list[list], labels: list, max_iterator: int = 10)
         Train the perceptron learning algorithm with samples.
-    classify(new_data: [[]]) -> []
+    classify(new_data: list[list]) -> list[int]
         Classify the input data.
 
     See Also
