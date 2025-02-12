@@ -53,6 +53,7 @@ class PerceptronClassifier:
     >>> perceptron_classifier.classify(new_data)
     [1, -1]
     """
+
     def __init__(self, number_of_attributes: int, class_labels: Tuple):
         """Initializer of PerceptronClassifier.
 

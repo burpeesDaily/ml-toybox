@@ -2,7 +2,7 @@ import urllib.request
 import numpy as np
 import pandas as pd
 
-from mltoolbox import perceptron_classifier  # Perceptron classifier
+from mltoolbox import perceptron_classifier
 
 # Download Iris Data Set from http://archive.ics.uci.edu/ml/datasets/Iris
 URL = "http://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data"
