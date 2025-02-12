@@ -1,7 +1,3 @@
-# Copyright © 2017, 2019 by Shun Huang. All rights reserved.
-# Licensed under MIT License.
-# See LICENSE in the project root for license information.
-
 import collections
 
 import numpy as np
@@ -11,8 +7,9 @@ import seaborn as sns
 from typing import Any
 from urllib import request
 
-from sklearn import preprocessing
+from sklearn import impute
 from sklearn import model_selection
+from sklearn import preprocessing
 
 from mltoolbox import pocket_classifier
 
@@ -23,13 +20,15 @@ sns.set_theme()  # set the default seaborn theme, scaling, and color palette.
 def imputer_by_most_frequent(missing_values: Any, data: list) -> list:
     """Input missing value by frequency, i.e., the value appeared
     most often.
+
     Parameters
     ----------
     missing_values: Any
         The missing value can be np.nan, "?", or whatever character
         which indicates missing value.
-    data: []
+    data: list
         The list of the data.
+
     Returns
     -------
     List of numerical data
@@ -44,13 +43,15 @@ def imputer_by_most_frequent(missing_values: Any, data: list) -> list:
     return complete_list
 
 
-def one_hot_encoder(data=list) -> list:
+def one_hot_encoder(data: list) -> list:
     """Transfer categorical data to numerical data based on one hot
     encoding approach.
+
     Parameters
     ----------
     data: list of data. Any numerical type.
         One dimension list.
+
     Returns
     -------
     List of int
@@ -98,7 +99,7 @@ if __name__ == "__main__":
 
     A1_encoded = one_hot_encoder(A1_no_missing)
 
-    imputer = preprocessing.Imputer(missing_values=np.nan, strategy="mean", axis=0)
+    imputer = impute.SimpleImputer(missing_values=np.nan, strategy="mean")
 
     A2_two_d = np.array([[item] for item in crx_data.iloc[:, 1].values])
     A2_no_missing = imputer.fit_transform(A2_two_d)

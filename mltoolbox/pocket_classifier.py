@@ -2,12 +2,12 @@
 # Licensed under MIT License.
 # See LICENSE in the project root for license information.
 
-"""A Pocket Classifier."""
+"""Pocket Classifier."""
 
 
 import numpy as np
 
-from typing import List, Tuple
+from typing import Any, Tuple
 
 
 class Pocket:
@@ -24,6 +24,7 @@ class Pocket:
 
     def __init__(self, number_of_attributes: int):
         """Initializer of Pocket.
+
         Parameters
         ----------
         number_of_attributes: int
@@ -54,10 +55,12 @@ class PocketClassifier:
         Train the perceptron learning algorithm with samples.
     classify(new_data: [[]]) -> []
         Classify the input data.
+
     See Also
     --------
     See details at:
     https://www.formosa1544.com/2018/02/11/machine-learning-basics-pocket-learning-algorithm-and-basic-feature-engineering/
+
     Examples
     --------
     Two dimensions list and each sample has four attributes
@@ -111,11 +114,11 @@ class PocketClassifier:
         self._label_map = {1: class_labels[0], -1: class_labels[1]}
         self._reversed_label_map = {class_labels[0]: 1, class_labels[1]: -1}
 
-    def _linear_combination(self, sample: List) -> float:
+    def _linear_combination(self, sample: list) -> Any:
         """Linear combination of sample and weights."""
-        return float(np.inner(sample, self.weights[1:]))
+        return np.inner(sample, self.weights[1:])
 
-    def train(self, samples: List[List], labels: List, max_iterator: int = 10):
+    def train(self, samples: list[list], labels: list, max_iterator: int = 10) -> None:
         """Train the model with samples.
 
         Parameters
@@ -160,13 +163,14 @@ class PocketClassifier:
 
             self.misclassify_record.append(self.pocket.misclassify_count)
 
-    def classify(self, new_data: List[List]) -> List:
+    def classify(self, new_data: list[list]) -> list[int]:
         """Classify the sample based on the trained weights.
 
         Parameters
         ----------
         new_data: two dimensions list
             New data to be classified.
+
         Return
         ------
         List of int
