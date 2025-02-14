@@ -1,17 +1,22 @@
-# Copyright © 2017, 2019, 2020 by Shun Huang. All rights reserved.
+# Copyright © 2017, 2019, 2020, 2025 by Shun Huang. All rights reserved.
 # Licensed under MIT License.
 # See LICENSE in the project root for license information.
 
-"""A Pocket Classifier."""
+"""Pocket Classifier."""
 
 
 import numpy as np
 
-from typing import List, Tuple
+from typing import Any, Tuple
 
 
 class Pocket:
     """The class keeps the best weights seen so far in the learning process.
+
+    Parameters
+    ----------
+    number_of_attributes: int
+        The number of attributes of the data set.
 
     Attributes
     ----------
@@ -23,12 +28,6 @@ class Pocket:
     """
 
     def __init__(self, number_of_attributes: int):
-        """Initializer of Pocket.
-        Parameters
-        ----------
-        number_of_attributes: int
-            The number of attributes of the data set.
-        """
         self.best_weights = np.zeros(number_of_attributes + 1)
 
         # -1 means the class is initialized but does not have valid value
@@ -37,6 +36,14 @@ class Pocket:
 
 class PocketClassifier:
     """Pocket Binary Classifier.
+
+    Parameters
+    ----------
+    number_of_attributes: int
+        The number of attributes of the data set.
+    class_labels: tuple of the class labels
+        The class labels can be anything as long as it has
+        only two types of labels.
 
     Attributes
     ----------
@@ -48,16 +55,19 @@ class PocketClassifier:
         The list of weights corresponding input attributes.
     misclassify_record: list of int
         The number of misclassification for each training sample.
+
     Methods
     -------
-    train(samples: [[]], labels: [], max_iterator: int = 10)
+    train(samples: list[list], labels: list, max_iterator: int = 10)
         Train the perceptron learning algorithm with samples.
-    classify(new_data: [[]]) -> []
+    classify(new_data: list[list]) -> list[int]
         Classify the input data.
+
     See Also
     --------
     See details at:
     https://www.formosa1544.com/2018/02/11/machine-learning-basics-pocket-learning-algorithm-and-basic-feature-engineering/
+
     Examples
     --------
     Two dimensions list and each sample has four attributes
@@ -85,17 +95,6 @@ class PocketClassifier:
     """
 
     def __init__(self, number_of_attributes: int, class_labels: Tuple):
-        """Initializer of PocketClassifier.
-
-        Parameters
-        ----------
-        number_of_attributes: int
-            The number of attributes of the data set.
-        class_labels: tuple of the class labels
-            The class labels can be anything as long as it has
-            only two types of labels.
-        """
-
         # Initialize the Pocket class.
         self.pocket = Pocket(number_of_attributes)
         # Initialize the weights to zero.
@@ -104,21 +103,18 @@ class PocketClassifier:
         self.weights = np.zeros(number_of_attributes + 1)
 
         # Record of the number of misclassify for each training sample.
-        self.misclassify_record = []
+        self.misclassify_record: list[int] = []
 
         # Build the label map to map the original labels to numerical
         # labels. For example, ["a", "b"] -> {0: "a", 1: "b"}
         self._label_map = {1: class_labels[0], -1: class_labels[1]}
         self._reversed_label_map = {class_labels[0]: 1, class_labels[1]: -1}
 
-    def _linear_combination(self, sample: List) -> float:
+    def _linear_combination(self, sample: list) -> Any:
         """Linear combination of sample and weights."""
         return np.inner(sample, self.weights[1:])
 
-    def train(self, 
-              samples: List[List],
-              labels: List,
-              max_iterator: int = 10):
+    def train(self, samples: list[list], labels: list, max_iterator: int = 10) -> None:
         """Train the model with samples.
 
         Parameters
@@ -132,9 +128,7 @@ class PocketClassifier:
             The default is 10.
         """
         # Transfer the labels to numerical labels
-        transferred_labels = [
-            self._reversed_label_map[index] for index in labels
-        ]
+        transferred_labels = [self._reversed_label_map[index] for index in labels]
 
         for _ in range(max_iterator):
             misclassifies = 0
@@ -151,9 +145,11 @@ class PocketClassifier:
 
             # Update the pocket is the result is better than the one
             # in the pocket.
-            if (self.pocket.misclassify_count == -1) \
-                or (self.pocket.misclassify_count > misclassifies) \
-                or (misclassifies == 0):
+            if (
+                (self.pocket.misclassify_count == -1)
+                or (self.pocket.misclassify_count > misclassifies)
+                or (misclassifies == 0)
+            ):
 
                 self.pocket.best_weights = self.weights
                 self.pocket.misclassify_count = misclassifies
@@ -163,19 +159,21 @@ class PocketClassifier:
 
             self.misclassify_record.append(self.pocket.misclassify_count)
 
-    def classify(self, new_data: List[List]) -> List:
+    def classify(self, new_data: list[list]) -> list[int]:
         """Classify the sample based on the trained weights.
 
         Parameters
         ----------
         new_data: two dimensions list
             New data to be classified.
+
         Return
         ------
         List of int
             The list of predicted class labels.
         """
-        predicted_result = np.where((self._linear_combination(new_data)
-                                    + self.weights[0]) >= 0.0, 1, -1)
+        predicted_result = np.where(
+            (self._linear_combination(new_data) + self.weights[0]) >= 0.0, 1, -1
+        )
 
         return [self._label_map[item] for item in predicted_result]
